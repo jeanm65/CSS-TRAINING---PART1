@@ -1,0 +1,208 @@
+/** I. fil rouges: couleurs, dimensions, selecteurs
+    II. Texte
+    III.Background
+    IV. Boxes
+    V. Positioning
+    VI. flex
+    VII. Grid
+    VIII. Pseudo classe
+    IX. Débug
+    X. Responsive**/
+
+/*Si on veut importer un police:
+    import url(................) */
+/*utiliser un police télechargé:
+    @font-face{
+        font-family: 'font-1';
+        src: url(./dossier/nom_de_la_police
+        on peut utiliser ici partout font-1*/
+
+/* body{
+         font-family: 'font-1';
+     } */
+/* * {
+  margin: 0;
+  padding: 0;
+} */
+
+body {
+  background: url(./img/nature.jpg) center/cover; /*center peut être ici remplacé par right or left, et si on ne veut pas que le background se repéte ici, on ajoute no-repeat à nos propriétés. On peut également ajouter la propriété fixed pour permettre à notre image de ne pas bouger même si on scrolle notre page vers le bas*/
+  /*pour ne pas trop repéter l'image,on utilise le center/cover**/ /*telecharger des images dans pixabay qui sont totalement gratuites*/
+  height: 100vh; /* virtual height; ici, notre body prend 100% de l'hauteur de l'écran de notre utilisateur*/
+  overflow: hidden; /*on utilise ceci pour que le body qui a utilisé le 100% de l'écran de notre utilisateur ne soit plus scrollable*/
+}
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 2.5rem; /**l'unité de mésures des textes est géneralement le rem, 1rem = 16px en géneral**/
+  color: darkblue; /**couleur du texte**/
+  text-shadow: 5px 0 0 darkcyan; /* la 1ere valeur(suivant x) la seconde valeur(suivant y) 3ème valeur blur (flu) 4ème valeur (couleur de l'ombre)  */
+  text-align: center; /*positionner notre text*/
+  color: #e0ffff;
+}
+
+main {
+  background: whitesmoke;
+  width: 85%; /* c'est mieux d'utiliser le % comme unité pour définir le dimension de notre width, ici, cela signifie, notre main va occuper 85% de l'écran de notre utilisateur, peu importe l'écran? c'est un question de responsivité*/
+  min-height: 500px; /* sur les hauteurs, on parle souvent en pixel*/
+  /* margin: 70px 20px; /*70px en haut et en bas (suivant y), 20px gauche et droite (suivant x)*/
+  /*margin: 150px 10px 14px 20px signifient 150px(haut) 10px(droite) 14px(bas) 20px (gauche) : sens de l'aiguille d'une montre*/
+  margin: 10px auto; /*10px en haut et bas et automatique à gauche et à droite (c'est à dire qu'ils auront le même marge à gauche et à droite */
+  /**padding: 10px /*haut et bas 40px */ /*gauche et droite*/ /*marge intérieur de notre texte*/
+  padding: 15px;
+  border-radius: 10px; /**ajouter un border radius, cad arrondir les bords de notre main**/
+  /*box-shadow: -5px -5px 7px darkblue; */ /*veuillez toujours utiliser l'inspecteur de votre navigateur pour avoir plus de précision la dessus : inspecteur --> élement --> style, et selectionnez l'élement que vous voulez étudier dans l'html affiché sur le navigateur*/
+  box-shadow: 0px 12px 2px 5px rgba(0, 0, 0, 0.055); /* le mieux c'est qu'un shadow ne doit pas être trop prononcé, il faut que ça soit plus léger que possible, alors jouez sur l'oppacité quand on utilise le rgba, un palette s'affiche sur le vscode*/
+}
+
+.positioning,
+.flexbox,
+.grid {
+  border: 2px solid skyblue;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 10px;
+  /*on a mis ici un padding 10px partout notre padding-top n'est pas 10px dans l'affichage. On peut utiliser le plugin ruler measurement de chrome, l'installer puis actualiser la page pour pouvoir l'utiliser. On remarque qu'en inspectant notre h2 positioning dans notre navigateur, le navigateur a mis un margin automatique. c'est un reglage de base fait par le navigateur pour les titres de type h2 */
+}
+/* il y a deux solutions pour cela, soit:
+h2{
+  margin: 0;
+} soit: regardez tout en début de notre css, le selecteur *
+*/
+
+/********************************POSITIONING*********************************************/
+
+.positioning {
+  position: relative;
+}
+
+h2 {
+  margin: 0;
+}
+
+#circle {
+  height: 60px;
+  width: 60px;
+  background-color: skyblue;
+  padding: 20px;
+  border-radius: 50%;
+  position: absolute; /* A partir de là (position : absolute), on peut le mettre où on veut sur notre page*/
+  top: -10px;
+  right: 110px; /*avec ce top puis ce right notre cercle va se mettre en top puis tout à droite de notre page. Mais ce n'est pas un bon pratique. Pour que notre cercle reste toujours dans son parent (ici, le <div class='positioning'>, on peut donner à son parent, un position: relative. Ainsi, notre cercle reste toujours dans son parent */
+  box-shadow: 0 2px 12px 5px rgba(51, 51, 51, 0.13);
+  /*dans l'affichage, le rectangle se met devant le cercle car dans l'html, c'est l'élement qui vient apres le cercle */
+  /*le cercle peut passer devant si on lui passe un z-index: 1 par exemple. Celui qui a le z-index: supérieur passera toujours devant. Si on passe un z-index: -1 (negatif), ceci va être passer en dessous de tous les autres élements ;;;*/
+}
+
+#rectangle {
+  height: 15px;
+  width: 100px;
+  background: slateblue;
+  padding: 20px;
+  position: absolute;
+  left: 50%;
+  /*ici, ça va centrer notre rectangle. Pourtant, on remarque que notre rectangle n'est pas vraiment centré, mais plûtot son extremité gauche. Comment on va faire pour centrer le rectangle??*/
+  transform: translateX(
+    -50%
+  ); /* et là, notre rectangle est parfaitement centré*/
+  bottom: 2px; /* ici aussi, on va centrer par rapport à l'axe des y notre rectangle et on a le même problème qu'en haut, on va le resoudre.*/
+  /*transform: translateY(-50%);
+  /*MAIS ON PEUT TOUT SIMPLEMENT FAIRE POUR LES DEUX CAS: */
+  /*transform: translate(-50%, -50%); /* et là notre rectangle est parfaitement centré*/
+}
+
+/*************************************FLEXBOX*****************************************************/
+ul {
+  display: flex;
+  justify-content: space-around; /* On peut faire aussi space-between */
+  padding: 0; /*on a ajouté ce padding: 0, car il y a un padding à droite qui ne permet pas de centrer exactement nos élements*/
+}
+
+li {
+  list-style-type: none;
+  font-size: 0.7rem;
+  height: 160px;
+  background: turquoise;
+
+  /************* Centrer  verticalement vos contenus dans les boite *************************/
+  display: flex;
+  align-items: center; /*centrer verticalement*/
+  justify-content: center; /*centrer horizontalement*/
+}
+
+/************************************GRID***********************************************************************/
+.grid-container {
+  display: grid;
+  grid-template-columns: 30% 30% 40%; /*30% pour le premier enfant et 30% pour le deuxième enfant et 40% pour le troisième enfant*/
+  padding: 20px;
+  min-width: 180px;
+}
+.img {
+  text-align: center;
+}
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "i1 i2"
+    "ta ta"
+    "bt bt";
+}
+input,
+textarea {
+  margin: 5px;
+  height: 45px;
+  border: 1px solid darkblue;
+  padding: 10px;
+  font-size: 1.1rem;
+  border-radius: 5px;
+}
+#first-name {
+  grid-area: i1;
+}
+#surname {
+  grid-area: i2;
+}
+textarea {
+  grid-area: ta;
+  resize: none;
+}
+input[type="submit"] {
+  grid-area: bt;
+  cursor: pointer;
+  background: cyan;
+  transition: 0.5s;
+}
+input[type="submit"]:hover {
+  background: darkblue;
+  color: #e0ffff;
+}
+
+/**************************************RESPONSIVE**************************************************/
+@media screen and (max-width: 1000px) {
+  .grid-container {
+    display: block;
+  }
+}
+@media screen and (max-width: 780px) {
+  form {
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "i1"
+      "i2"
+      "ta"
+      "bt";
+  }
+}
+@media screen and (max-width: 360px) {
+  form {
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "i1"
+      "i2"
+      "ta"
+      "bt";
+  }
+}
